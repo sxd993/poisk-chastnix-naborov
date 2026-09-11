@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Поиск частых наборов объектов алгоритмом Apriori."""
 
 from __future__ import annotations
