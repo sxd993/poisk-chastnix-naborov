@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Поиск частых наборов объектов алгоритмом Apriori."""
 
 from __future__ import annotations
@@ -43,7 +42,9 @@ def _join_candidates(prev: list[Itemset], k: int) -> list[Itemset]:
     return candidates
 
 
-def _prune_candidates(candidates: list[Itemset], prev_set: set[Itemset], k: int) -> list[Itemset]:
+def _prune_candidates(
+    candidates: list[Itemset], prev_set: set[Itemset], k: int
+) -> list[Itemset]:
     """Отбрасывает кандидатов, у которых есть нечастый (k-1)-поднабор."""
     kept: list[Itemset] = []
     for cand in candidates:
@@ -79,6 +80,9 @@ def apriori(
     for itemset, cnt in l_k.items():
         frequent[itemset] = cnt / n_tx
 
+    frequent_items = {next(iter(s)) for s in l_k}
+    filtered = [{item for item in t if item in frequent_items} for t in transactions]
+
     k = 2
     while l_k:
         prev_list = list(l_k.keys())
@@ -89,7 +93,7 @@ def apriori(
 
         cand_set = set(candidates)
         counts: dict[Itemset, int] = defaultdict(int)
-        for t in transactions:
+        for t in filtered:
             if len(t) < k:
                 continue
             for cand in combinations(sorted(t), k):
