@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Эксперименты с порогом поддержки и визуализация результатов."""
 
 from __future__ import annotations
